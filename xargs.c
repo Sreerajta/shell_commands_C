@@ -3,16 +3,14 @@
 #include<string.h>
 #include<unistd.h>
 
-int pid=1;;
-
+int pid=1;
 
 void main(int argc,char *argv[]){
 
 char *buffer;
 char *arg[10];
-int token_counter=0;
 char line[100];
-
+int token_counter=1;
 buffer=fgets(buffer,1024,stdin);
 buffer[strcspn(buffer, "\n")] = 0;
 
@@ -20,16 +18,12 @@ for (char *p = strtok(buffer," \n"); p != NULL; p = strtok(NULL, " ")){
     arg[token_counter]=strdup(p);
     token_counter++;
 }
+  arg[0]="./a.out";
   
-
-
-for(int i=0;i<token_counter;++i){
-    pid=fork();
-
-    if(pid==0){
-        execl(argv[1],"pname",arg[i]);
-        exit(0);
-    }
+  
+pid=fork();
+if(pid==0){
+execv(argv[1],arg);
 }
 
 
